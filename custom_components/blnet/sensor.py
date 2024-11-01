@@ -1,14 +1,15 @@
 """
 Connect to a BL-NET via it's web interface and read and write data
 """
+
 import logging
 
 from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = 'blnet'
-FRIENDLY_NAME = 'friendly_name'
+DOMAIN = "blnet"
+FRIENDLY_NAME = "friendly_name"
 
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
@@ -18,9 +19,9 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         _LOGGER.error("No BL-Net communication configured")
         return False
 
-    sensor_id = discovery_info['id']
-    blnet_id = discovery_info['name']
-    comm = hass.data['DATA_{}'.format(DOMAIN)]
+    sensor_id = discovery_info["id"]
+    blnet_id = discovery_info["name"]
+    comm = hass.data["DATA_{}".format(DOMAIN)]
 
     add_devices([BLNETComponent(hass, sensor_id, blnet_id, comm)], True)
     return True
@@ -38,6 +39,7 @@ class BLNETComponent(Entity):
         self._state = None
         self._unit_of_measurement = None
         self._icon = None
+        self._attr_unique_id = name
 
     @property
     def name(self):
@@ -68,13 +70,13 @@ class BLNETComponent(Entity):
         return attrs
 
     def update(self):
-        """Get the latest data from communication device """
+        """Get the latest data from communication device"""
         sensor_data = self.communication.data.get(self._identifier)
 
         if sensor_data is None:
             return
 
-        self._friendly_name = sensor_data.get('friendly_name')
-        self._state = sensor_data.get('value')
-        self._unit_of_measurement = sensor_data.get('unit_of_measurement')
-        self._icon = sensor_data.get('icon')
+        self._friendly_name = sensor_data.get("friendly_name")
+        self._state = sensor_data.get("value")
+        self._unit_of_measurement = sensor_data.get("unit_of_measurement")
+        self._icon = sensor_data.get("icon")
