@@ -13,7 +13,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
     TEMP_CELSIUS,
 )
-from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.event import async_track_time_interval, track_time_interval
 from datetime import timedelta
 from datetime import datetime
 import time
@@ -65,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(hass, config):
+def setup(hass, config):
     """Set up the BLNET component"""
 
     from pyblnet import BLNET
@@ -108,7 +108,7 @@ async def async_setup(hass, config):
     # sensors and switches accordingly
     data = fetch_data()
     # Repeat if data fetching fails at first
-    async_track_time_interval(hass, fetch_data, timedelta(seconds=scan_interval))
+    track_time_interval(hass, fetch_data, timedelta(seconds=scan_interval))
 
     # Fetch method takes care of adding dicovered sensors
     return True
