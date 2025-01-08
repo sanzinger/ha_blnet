@@ -8,10 +8,7 @@ import voluptuous as vol
 from homeassistant.helpers.discovery import load_platform
 
 from homeassistant.const import (
-    CONF_RESOURCE,
-    CONF_PASSWORD,
-    CONF_SCAN_INTERVAL,
-    TEMP_CELSIUS,
+    CONF_RESOURCE, CONF_PASSWORD, CONF_SCAN_INTERVAL, UnitOfTemperature,
 )
 from homeassistant.helpers.event import async_track_time_interval, track_time_interval
 from datetime import timedelta
@@ -36,7 +33,12 @@ DEFAULT_TA_PORT = 40000
 # scan every 6 minutes per default
 DEFAULT_SCAN_INTERVAL = 360
 
-UNIT = {"analog": TEMP_CELSIUS, "speed": "rpm", "power": "kW", "energy": "kWh"}
+UNIT = {
+    'analog': UnitOfTemperature.CELSIUS,
+    'speed': 'rpm',
+    'power': 'kW',
+    'energy': 'kWh'
+}
 ICON = {
     "analog": "mdi:thermometer",
     "speed": "mdi:speedometer",
