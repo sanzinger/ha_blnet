@@ -153,8 +153,6 @@ class BLNETComm(object):
         nodes = [self.node, 1, 2]
         for node in nodes:
             data = self.blnet.fetch(node)
-            print(data)
-            _LOGGER.info("Collecting data...")
             for domain in ["analog", "speed", "power", "energy"]:
                 # iterate through the list and store the data for every sensor
                 for key, sensor in data.get(domain, {}).items():
@@ -183,7 +181,6 @@ class BLNETComm(object):
             # save that the data was updated just now
             self._last_updated = datetime.now()
 
-            _LOGGER.info("Checking for new sensors...")
             # Check if there are new sensors that are to be added
             i = 0
             # iterate through the list and create a sensor for every value
